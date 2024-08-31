@@ -4,7 +4,7 @@
 // Copyright: 2022, Grey <grey@openrobotics.org>
 // License: MIT
 
-use iced::{
+use cosmic::iced::{
     event, executor,
     mouse::Cursor,
     widget::{
@@ -39,7 +39,7 @@ impl Application for State {
         )
     }
 
-    fn title(&self) -> String {
+    fn title(&self, _: cosmic::iced::window::Id) -> String {
         "Art".to_owned()
     }
 
@@ -48,10 +48,14 @@ impl Application for State {
             Message::MouseEvent(event, point) => {
                 self.chart.set_current_position(point);
                 match event {
-                    iced::mouse::Event::ButtonPressed(iced::mouse::Button::Left) => {
+                    cosmic::iced::mouse::Event::ButtonPressed(
+                        cosmic::iced::mouse::Button::Left,
+                    ) => {
                         self.chart.set_down(true);
                     }
-                    iced::mouse::Event::ButtonReleased(iced::mouse::Button::Left) => {
+                    cosmic::iced::mouse::Event::ButtonReleased(
+                        cosmic::iced::mouse::Button::Left,
+                    ) => {
                         self.chart.set_down(false);
                     }
                     _ => {
@@ -64,7 +68,7 @@ impl Application for State {
         Command::none()
     }
 
-    fn view(&self) -> Element<Self::Message> {
+    fn view(&self, _: cosmic::iced::window::Id) -> Element<Self::Message> {
         let content = Column::new()
             .spacing(20)
             .width(Length::Fill)
@@ -234,7 +238,7 @@ impl Chart<Message> for ArtChart {
         &self,
         _state: &mut Self::State,
         event: canvas::Event,
-        bounds: iced::Rectangle,
+        bounds: cosmic::iced::Rectangle,
         cursor: Cursor,
     ) -> (event::Status, Option<Message>) {
         if let Cursor::Available(point) = cursor {
@@ -256,11 +260,11 @@ impl Chart<Message> for ArtChart {
 
 #[derive(Debug)]
 enum Message {
-    MouseEvent(iced::mouse::Event, iced::Point),
+    MouseEvent(cosmic::iced::mouse::Event, cosmic::iced::Point),
 }
 
-fn main() -> iced::Result {
-    State::run(iced::Settings {
+fn main() -> cosmic::iced::Result {
+    State::run(cosmic::iced::Settings {
         antialiasing: true,
         ..Default::default()
     })

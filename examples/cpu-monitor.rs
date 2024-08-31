@@ -4,12 +4,12 @@
 // Copyright: 2022, Joylei <leingliu@gmail.com>
 // License: MIT
 
-extern crate iced;
-extern crate plotters;
-extern crate sysinfo;
+// extern crate iced;
+// extern crate plotters;
+// extern crate sysinfo;
 
 use chrono::{DateTime, TimeZone, Utc};
-use iced::{
+use cosmic::iced::{
     alignment::{Horizontal, Vertical},
     executor, font,
     widget::{
@@ -77,7 +77,7 @@ impl Application for State {
         )
     }
 
-    fn title(&self) -> String {
+    fn title(&self, _: cosmic::iced::window::Id) -> String {
         "CPU Monitor Example".to_owned()
     }
 
@@ -91,7 +91,7 @@ impl Application for State {
         Command::none()
     }
 
-    fn view(&self) -> Element<'_, Self::Message> {
+    fn view(&self, _: cosmic::iced::window::Id) -> Element<'_, Self::Message> {
         let content = Column::new()
             .spacing(20)
             .align_items(Alignment::Start)
@@ -116,7 +116,7 @@ impl Application for State {
 
     fn subscription(&self) -> Subscription<Self::Message> {
         const FPS: u64 = 50;
-        iced::time::every(Duration::from_millis(1000 / FPS)).map(|_| Message::Tick)
+        cosmic::iced::time::every(Duration::from_millis(1000 / FPS)).map(|_| Message::Tick)
     }
 }
 
@@ -159,7 +159,7 @@ impl SystemChart {
         }
         //eprintln!("refresh...");
 
-        self.sys.refresh_cpu();
+        self.sys.refresh_cpu_all();
         self.last_sample_time = Instant::now();
         let now = Utc::now();
         let data = self.sys.cpus().iter().map(|v| v.cpu_usage() as i32);
@@ -316,7 +316,7 @@ impl Chart<Message> for CpuUsageChart {
                     .color(&plotters::style::colors::BLUE.mix(0.65))
                     .transform(FontTransform::Rotate90),
             )
-            .y_label_formatter(&|y| format!("{}%", y))
+            // .y_label_formatter(&|y| format!("{}%", y))
             .draw()
             .expect("failed to draw chart mesh");
 

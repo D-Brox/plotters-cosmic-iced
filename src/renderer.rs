@@ -4,12 +4,12 @@
 // Copyright: 2022, Joylei <leingliu@gmail.com>
 // License: MIT
 
-use iced_widget::{
-    canvas::{Cache, Frame},
+use cosmic::iced_widget::{
+    canvas::{Cache, Frame, Geometry},
     core::{Layout, Size, Vector},
-    renderer::Geometry,
     text::Shaping,
 };
+
 use plotters::prelude::DrawingArea;
 
 use crate::backend::IcedChartBackend;
@@ -17,7 +17,9 @@ use crate::Chart;
 
 /// Graphics Renderer
 pub trait Renderer:
-    iced_widget::core::Renderer + iced_widget::core::text::Renderer + iced_graphics::geometry::Renderer
+    cosmic::iced_widget::core::Renderer
+    + cosmic::iced_widget::core::text::Renderer
+    + cosmic::iced::advanced::graphics::geometry::Renderer
 {
     /// draw a [Chart]
     fn draw_chart<Message, C>(
@@ -30,7 +32,7 @@ pub trait Renderer:
         C: Chart<Message>;
 }
 
-impl crate::chart::Renderer for iced_widget::renderer::Renderer {
+impl crate::chart::Renderer for cosmic::iced_widget::renderer::Renderer {
     fn draw<F: Fn(&mut Frame)>(&self, size: Size, f: F) -> Geometry {
         let mut frame = Frame::new(self, size);
         f(&mut frame);
@@ -42,7 +44,7 @@ impl crate::chart::Renderer for iced_widget::renderer::Renderer {
     }
 }
 
-impl Renderer for iced_widget::renderer::Renderer {
+impl Renderer for cosmic::iced_widget::renderer::Renderer {
     fn draw_chart<Message, C>(
         &mut self,
         state: &C::State,
@@ -62,8 +64,8 @@ impl Renderer for iced_widget::renderer::Renderer {
             chart.draw_chart(state, root);
         });
         let translation = Vector::new(bounds.x, bounds.y);
-        iced_widget::core::Renderer::with_translation(self, translation, |renderer| {
-            iced_graphics::geometry::Renderer::draw(renderer, vec![geometry]);
+        cosmic::iced_widget::core::Renderer::with_translation(self, translation, |renderer| {
+            cosmic::iced::advanced::graphics::geometry::Renderer::draw(renderer, vec![geometry]);
         });
     }
 }

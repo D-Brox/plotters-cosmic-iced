@@ -20,10 +20,10 @@ trunk serve
 
 */
 
-extern crate iced;
-extern crate plotters;
+// extern crate iced;
+// extern crate plotters;
 
-use iced::{
+use cosmic::iced::{
     executor,
     widget::{Column, Container, Text},
     window, Alignment, Application, Command, Element, Length, Settings, Subscription, Theme,
