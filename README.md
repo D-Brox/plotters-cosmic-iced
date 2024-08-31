@@ -29,14 +29,15 @@ Plotters is an extensible Rust drawing library that can be used to plot data on 
 Include `plotters-iced` in your `Cargo.toml` dependencies:
 
 ```toml
+
 [dependencies]
 plotters-iced = { git = "https://github.com/D-Brox/plotters-cosmic-iced.git" }
-iced = { version = "0.12", features = ["canvas", "tokio"] }
 plotters="0.3"
-libcosmic = { git = "https://github.com/pop-os/libcosmic.git" }
 
-[patch.crates-io.iced]
+[dependencies.libcosmic]
 git = "https://github.com/pop-os/libcosmic.git"
+default-deatures = false
+features = ["canvas", "tokio"] # add any required extra  feature if needed
 ```
 
 ## How to use?
