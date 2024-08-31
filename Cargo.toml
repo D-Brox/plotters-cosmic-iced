@@ -19,9 +19,12 @@ members = [".", "examples/split-chart"]
 [dependencies]
 plotters = { version = "0.3", default-features = false }
 plotters-backend = "0.3"
-iced_widget = { version = "0.13", features = ["canvas"] }
-iced_graphics = "0.13"
 once_cell = "1"
+
+[dependencies.libcosmic]
+git = "https://github.com/pop-os/libcosmic.git"
+default-features = false
+features = ["applet", "tokio", "wayland"]
 
 [dev-dependencies]
 plotters = { version = "0.3", default-features = false, features = [
@@ -30,10 +33,27 @@ plotters = { version = "0.3", default-features = false, features = [
     "line_series",
     "point_series",
 ] }
-iced = { version = "0.13", features = ["canvas", "tokio"] }
 chrono = { version = "0.4", default-features = false }
 rand = "0.8"
 tokio = { version = "1", features = ["rt"], default-features = false }
 
 [target.'cfg(not(target_arch = "wasm32"))'.dev-dependencies]
-sysinfo = { version = "0.30", default-features = false }
+sysinfo = { version = "0.32", default-features = false }
+
+[patch.crates-io.iced]
+git = "https://github.com/pop-os/libcosmic.git"
+
+[patch.crates-io.iced_core]
+git = "https://github.com/pop-os/libcosmic.git"
+
+[patch.crates-io.iced_widget]
+git = "https://github.com/pop-os/libcosmic.git"
+
+[patch.crates-io.iced_graphics]
+git = "https://github.com/pop-os/libcosmic.git"
+
+[patch.crates-io.iced_renderer]
+git = "https://github.com/pop-os/libcosmic.git"
+
+[patch.crates-io.iced_futures]
+git = "https://github.com/pop-os/libcosmic.git"

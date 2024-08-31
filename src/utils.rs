@@ -4,10 +4,11 @@
 // Copyright: 2022, Joylei <leingliu@gmail.com>
 // License: MIT
 
-use iced_widget::canvas;
-use iced_widget::core::{Color, Point};
+use cosmic::iced_widget::canvas;
+use cosmic::iced_widget::core::{Color, Point};
 use plotters_backend::{BackendColor, BackendCoord, BackendStyle};
 
+#[allow(dead_code)]
 pub(crate) trait AndExt {
     fn and<F: Fn(Self) -> Self>(self, f: F) -> Self
     where

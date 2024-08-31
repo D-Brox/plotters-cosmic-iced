@@ -15,9 +15,32 @@ plotters = { version = "0.3", default-features = false, features = [
     "point_series",
 ] }
 
-[target.'cfg(target_arch = "wasm32")'.dependencies]
-iced.version = "0.13"
-iced.features = ["canvas", "debug", "webgl"]
+[dependencies.libcosmic]
+git = "https://github.com/pop-os/libcosmic.git"
+default-features = false
+features = ["applet", "tokio", "wayland"]
+
+[target.'cfg(target_arch = "wasm32")'.dependencies.iced]
+version = "0.12"
+features = ["canvas", "debug", "webgl"]
 
 console_error_panic_hook = "0.1"
 console_log = "1.0"
+
+[patch.crates-io.iced]
+git = "https://github.com/pop-os/libcosmic.git"
+
+[patch.crates-io.iced_core]
+git = "https://github.com/pop-os/libcosmic.git"
+
+[patch.crates-io.iced_widget]
+git = "https://github.com/pop-os/libcosmic.git"
+
+[patch.crates-io.iced_graphics]
+git = "https://github.com/pop-os/libcosmic.git"
+
+[patch.crates-io.iced_renderer]
+git = "https://github.com/pop-os/libcosmic.git"
+
+[patch.crates-io.iced_futures]
+git = "https://github.com/pop-os/libcosmic.git"

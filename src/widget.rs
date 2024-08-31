@@ -6,7 +6,7 @@
 
 use core::marker::PhantomData;
 
-use iced_widget::{
+use cosmic::iced_widget::{
     canvas::Event,
     core::{
         event,
@@ -92,10 +92,10 @@ where
         &self,
         _tree: &mut Tree,
         _renderer: &Renderer,
-        limits: &iced_widget::core::layout::Limits,
-    ) -> iced_widget::core::layout::Node {
+        limits: &cosmic::iced_widget::core::layout::Limits,
+    ) -> cosmic::iced_widget::core::layout::Node {
         let size = limits.resolve(self.width, self.height, Size::ZERO);
-        iced_widget::core::layout::Node::new(size)
+        cosmic::iced_widget::core::layout::Node::new(size)
     }
 
     #[inline]
@@ -117,18 +117,18 @@ where
     fn on_event(
         &mut self,
         tree: &mut Tree,
-        event: iced_widget::core::Event,
+        event: cosmic::iced_widget::core::Event,
         layout: Layout<'_>,
         cursor: Cursor,
         _renderer: &Renderer,
-        _clipboard: &mut dyn iced_widget::core::Clipboard,
+        _clipboard: &mut dyn cosmic::iced_widget::core::Clipboard,
         shell: &mut Shell<'_, Message>,
         _rectangle: &Rectangle,
     ) -> event::Status {
         let bounds = layout.bounds();
         let canvas_event = match event {
-            iced_widget::core::Event::Mouse(mouse_event) => Some(Event::Mouse(mouse_event)),
-            iced_widget::core::Event::Keyboard(keyboard_event) => {
+            cosmic::iced_widget::core::Event::Mouse(mouse_event) => Some(Event::Mouse(mouse_event)),
+            cosmic::iced_widget::core::Event::Keyboard(keyboard_event) => {
                 Some(Event::Keyboard(keyboard_event))
             }
             _ => None,
@@ -153,7 +153,7 @@ where
         cursor: Cursor,
         _viewport: &Rectangle,
         _renderer: &Renderer,
-    ) -> iced_widget::core::mouse::Interaction {
+    ) -> cosmic::iced_widget::core::mouse::Interaction {
         let state = tree.state.downcast_ref::<C::State>();
         let bounds = layout.bounds();
         self.chart.mouse_interaction(state, bounds, cursor)

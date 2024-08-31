@@ -4,14 +4,14 @@
 // Copyright: 2022, Joylei <leingliu@gmail.com>
 // License: MIT
 
-extern crate iced;
-extern crate plotters;
-extern crate rand;
-extern crate tokio;
+// extern crate iced;
+// extern crate plotters;
+// extern crate rand;
+// extern crate tokio;
 
 use chrono::{DateTime, Utc};
-use iced::{
-    font,
+use cosmic::iced::{
+    executor, font,
     widget::{
         canvas::{Cache, Frame, Geometry},
         Column, Container, Text,
@@ -84,7 +84,11 @@ impl State {
         )
     }
 
-    fn update(&mut self, message: Message) -> Task<Message> {
+    fn title(&self, _: cosmic::iced::window::Id) -> String {
+        "Large Data Example".to_owned()
+    }
+
+    fn update(&mut self, message: Self::Message) -> Command<Self::Message> {
         match message {
             Message::DataLoaded(data) => Task::perform(
                 tokio::task::spawn_blocking(move || {
@@ -107,7 +111,7 @@ impl State {
         }
     }
 
-    fn view(&self) -> Element<'_, Message> {
+    fn view(&self, _: cosmic::iced::window::Id) -> Element<'_, Self::Message> {
         let content = Column::new()
             .spacing(20)
             .align_x(Alignment::Start)

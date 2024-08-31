@@ -4,8 +4,8 @@
 // Copyright: 2022, Grey <grey@openrobotics.org>
 // License: MIT
 
-use iced::{
-    event,
+use cosmic::iced::{
+    event, executor,
     mouse::Cursor,
     widget::{
         canvas::{self, Cache, Frame, Geometry},
@@ -25,16 +25,38 @@ struct State {
     chart: ArtChart,
 }
 
-impl State {
-    fn update(&mut self, message: Message) {
+impl Application for State {
+    type Message = Message;
+    type Executor = executor::Default;
+    type Flags = ();
+    type Theme = Theme;
+
+    fn new(_flags: Self::Flags) -> (Self, Command<Self::Message>) {
+        (
+            Self {
+                chart: ArtChart::default(),
+            },
+            Command::none(),
+        )
+    }
+
+    fn title(&self, _: cosmic::iced::window::Id) -> String {
+        "Art".to_owned()
+    }
+
+    fn update(&mut self, message: Self::Message) -> Command<Self::Message> {
         match message {
             Message::MouseEvent(event, point) => {
                 self.chart.set_current_position(point);
                 match event {
-                    iced::mouse::Event::ButtonPressed(iced::mouse::Button::Left) => {
+                    cosmic::iced::mouse::Event::ButtonPressed(
+                        cosmic::iced::mouse::Button::Left,
+                    ) => {
                         self.chart.set_down(true);
                     }
-                    iced::mouse::Event::ButtonReleased(iced::mouse::Button::Left) => {
+                    cosmic::iced::mouse::Event::ButtonReleased(
+                        cosmic::iced::mouse::Button::Left,
+                    ) => {
                         self.chart.set_down(false);
                     }
                     _ => {
@@ -45,7 +67,7 @@ impl State {
         }
     }
 
-    fn view(&self) -> Element<Message> {
+    fn view(&self, _: cosmic::iced::window::Id) -> Element<Self::Message> {
         let content = Column::new()
             .spacing(20)
             .width(Length::Fill)
@@ -213,7 +235,7 @@ impl Chart<Message> for ArtChart {
         &self,
         _state: &mut Self::State,
         event: canvas::Event,
-        bounds: iced::Rectangle,
+        bounds: cosmic::iced::Rectangle,
         cursor: Cursor,
     ) -> (event::Status, Option<Message>) {
         if let Cursor::Available(point) = cursor {
@@ -235,11 +257,12 @@ impl Chart<Message> for ArtChart {
 
 #[derive(Debug)]
 enum Message {
-    MouseEvent(iced::mouse::Event, iced::Point),
+    MouseEvent(cosmic::iced::mouse::Event, cosmic::iced::Point),
 }
 
-fn main() -> iced::Result {
-    iced::application("Art", State::update, State::view)
-        .antialiasing(true)
-        .run()
+fn main() -> cosmic::iced::Result {
+    State::run(cosmic::iced::Settings {
+        antialiasing: true,
+        ..Default::default()
+    })
 }
