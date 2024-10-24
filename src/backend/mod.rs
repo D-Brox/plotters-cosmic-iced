@@ -6,7 +6,7 @@
 
 use std::collections::HashSet;
 
-use cosmic::iced::advanced::text::{Paragraph, Shaping, Wrap};
+use cosmic::iced::advanced::text::{Paragraph, Shaping};
 use cosmic::iced::widget::canvas;
 use cosmic::iced_widget::core::{
     alignment::{Horizontal, Vertical},
@@ -272,17 +272,17 @@ where
             text_anchor::VPos::Bottom => Vertical::Bottom,
         };
 
-        let mut p = B::Paragraph::default();
-        p.update(cosmic::iced_widget::core::text::Text {
-            content: text,
-            bounds,
-            size: self.backend.default_size(),
-            line_height: Default::default(),
-            font,
-            horizontal_alignment,
-            vertical_alignment,
-            shaping: self.shaping,
-            wrap: Wrap::Word,
+        let p = B::Paragraph::with_text(
+            cosmic::iced_widget::core::text::Text {
+                content: text,
+                bounds,
+                size: self.backend.default_size(),
+                line_height: Default::default(),
+                font,
+                horizontal_alignment,
+                vertical_alignment,
+                shaping: self.shaping,
+                wrapping: cosmic::iced_widget::core::text::Wrapping::Word,
         });
         let size = p.min_bounds();
         Ok((size.width as u32, size.height as u32))

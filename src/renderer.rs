@@ -65,7 +65,7 @@ impl Renderer for cosmic::iced_widget::renderer::Renderer {
         });
         let translation = Vector::new(bounds.x, bounds.y);
         cosmic::iced_widget::core::Renderer::with_translation(self, translation, |renderer| {
-            cosmic::iced::advanced::graphics::geometry::Renderer::draw(renderer, vec![geometry]);
+            cosmic::iced::advanced::graphics::geometry::Renderer::draw_geometry(renderer, geometry);
         });
     }
 }
