@@ -272,17 +272,16 @@ where
             text_anchor::VPos::Bottom => Vertical::Bottom,
         };
 
-        let p = B::Paragraph::with_text(
-            cosmic::iced_widget::core::text::Text {
-                content: text,
-                bounds,
-                size: self.backend.default_size(),
-                line_height: Default::default(),
-                font,
-                horizontal_alignment,
-                vertical_alignment,
-                shaping: self.shaping,
-                wrapping: cosmic::iced_widget::core::text::Wrapping::Word,
+        let p = B::Paragraph::with_text(cosmic::iced_widget::core::text::Text {
+            content: text,
+            bounds,
+            size: self.backend.default_size(),
+            line_height: Default::default(),
+            font,
+            horizontal_alignment,
+            vertical_alignment,
+            shaping: self.shaping,
+            wrapping: cosmic::iced_widget::core::text::Wrapping::Word,
         });
         let size = p.min_bounds();
         Ok((size.width as u32, size.height as u32))
@@ -312,6 +311,7 @@ fn style_to_font<S: BackendTextStyle>(style: &S) -> Font {
             FontFamily::SansSerif => font::Family::SansSerif,
             FontFamily::Monospace => font::Family::Monospace,
             FontFamily::Name(s) => {
+                #[allow(static_mut_refs)]
                 let s = unsafe {
                     if !FONTS.contains(s) {
                         FONTS.insert(String::from(s));

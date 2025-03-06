@@ -6,15 +6,12 @@ readme = "README.md"
 license = "MIT"
 edition = "2021"
 resolver = "2"
-homepage = "https://github.com/Joylei/plotters-iced"
-repository = "https://github.com/Joylei/plotters-iced.git"
+homepage = "https://github.com/D-Brox/plotters-cosmic-iced"
+repository = "https://github.com/D-Brox/plotters-cosmic-iced.git"
 documentation = "https://docs.rs/crate/plotters-iced/"
 keywords = ["plotters", "chart", "plot", "iced", "backend"]
 categories = ["visualization"]
-authors = ["Joylei <leingliu@gmail.com>"]
-
-[workspace]
-members = [".", "examples/split-chart"]
+authors = ["Joylei <leingliu@gmail.com>","D Brox <davidfbg00@gmail.com"]
 
 [dependencies]
 plotters = { version = "0.3", default-features = false }
@@ -34,11 +31,14 @@ plotters = { version = "0.3", default-features = false, features = [
     "point_series",
 ] }
 chrono = { version = "0.4", default-features = false }
-rand = "0.8"
+rand = "0.9"
 tokio = { version = "1", features = ["rt"], default-features = false }
+sysinfo = { version = "0.33.1", default-features = false, features = ["system"]}
 
-[target.'cfg(not(target_arch = "wasm32"))'.dev-dependencies]
-sysinfo = { version = "0.32", default-features = false }
+[dev-dependencies.libcosmic]
+git = "https://github.com/pop-os/libcosmic.git"
+default-features = false
+features = ["tokio","winit"]
 
 [patch.crates-io.iced]
 git = "https://github.com/pop-os/libcosmic.git"

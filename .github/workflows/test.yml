@@ -35,9 +35,6 @@ jobs:
         run: rustc --version && rustup --version && cargo --version
       - name: Cargo Build
         run: cargo build --verbose
-      - name: Build example
-        run: cargo build --examples
-        continue-on-error: true
       - name: Run tests
         run: cargo test --verbose
       - name: Check code style

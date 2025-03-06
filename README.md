@@ -1,5 +1,5 @@
 # plotters-cosmic-iced
-[![Test and Build](https://github.com/joylei/plotters-iced/workflows/Test%20and%20Build/badge.svg?branch=master)](https://github.com/joylei/plotters-iced/actions?query=workflow%3A%22Test+and+Build%22)
+[![Test and Build](https://github.com/D-Brox/plotters-cosmic-iced/actions/workflows/test.yml/badge.svg)](https://github.com/D-Brox/plotters-cosmic-iced/actions/workflows/test.yml/badge.svg)
 [![Documentation](https://docs.rs/plotters-iced/badge.svg)](https://docs.rs/plotters-iced)
 [![Crates.io](https://img.shields.io/crates/v/plotters-iced.svg)](https://crates.io/crates/plotters-iced)
 [![License](https://img.shields.io/crates/l/plotters-iced.svg)](https://github.com/joylei/plotters-iced/blob/master/LICENSE)
@@ -21,7 +21,7 @@ Plotters is an extensible Rust drawing library that can be used to plot data on 
 **For more details on Plotters, please check the following links:**
 
 - For an introduction of Plotters, see: [Plotters on Crates.io](https://crates.io/crates/plotters);
-- Check the main repository on [GitHub](https://github.com/38/plotters);
+- Check the main repository on [GitHub](https://github.com/plotters-rs/plotters);
 - You can also visit the Plotters [homepage](https://plotters-rs.github.io/);
 
 ## How to install?
@@ -37,7 +37,7 @@ plotters-iced = { git = "https://github.com/D-Brox/plotters-cosmic-iced.git" }
 [dependencies.libcosmic]
 git = "https://github.com/pop-os/libcosmic.git"
 default-deatures = false
-features = ["canvas", "tokio"] # add any required extra features if needed
+features = ["tokio"] # add any required extra features if needed
 ```
 
 ## How to use?
@@ -73,42 +73,6 @@ impl MyChart {
 }
 ```
 
-_If you are looking for a full example of an implementation, please check [cpu-monitor.rs](./examples/cpu-monitor.rs)._
-
-## How to run the examples?
-
-### Example #1: `cpu-monitor`
-
-This example samples your CPU load every second, and renders it in a real-time chart:
-
-```sh
-cargo run --release --example cpu-monitor
-```
-
-From this example, you'll learn:
-
-- how to build charts by `plotters-iced`
-- how to feed data to charts
-- how to make layouts of charts responsive
-- how to use fonts with charts
-
-### Example #2: `split-chart`
-
-This example shows you how to split drawing area.
-
-- run the native version
-
-```sh
-cargo run --release --example split-chart
-```
-
-- run the web version
-
-```sh
-cd examples/split-chart
-trunk serve
-```
-
 ## Are there any limitations?
 
 ### Limitation #1: No image rendering
@@ -122,3 +86,4 @@ Only TTF font family are supported for text rendering, which is a limitation of 
 ## Credits
 
 - [plotters-conrod](https://github.com/valeriansaliou/plotters-conrod)
+- [plotters-iced](https://github.com/joylei/plotters-iced)
