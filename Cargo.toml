@@ -23,22 +23,9 @@ git = "https://github.com/pop-os/libcosmic.git"
 default-features = false
 features = ["tokio"]
 
-[dev-dependencies]
-plotters = { version = "0.3", default-features = false, features = [
-    "chrono",
-    "area_series",
-    "line_series",
-    "point_series",
-] }
-chrono = { version = "0.4", default-features = false }
-rand = "0.9"
-tokio = { version = "1", features = ["rt"], default-features = false }
-sysinfo = { version = "0.33.1", default-features = false, features = ["system"]}
-
-[dev-dependencies.libcosmic]
-git = "https://github.com/pop-os/libcosmic.git"
-default-features = false
-features = ["tokio","winit"]
+[features]
+default = ["wgpu"]
+wgpu = ["libcosmic/wgpu"]
 
 [patch.crates-io.iced]
 git = "https://github.com/pop-os/libcosmic.git"
