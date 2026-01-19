@@ -8,22 +8,15 @@ use std::collections::HashSet;
 
 use cosmic::iced::advanced::text::{Paragraph, Shaping};
 use cosmic::iced::widget::canvas;
+use cosmic::iced::{Point, Vector};
 use cosmic::iced_widget::core::{
     alignment::{Horizontal, Vertical},
     font, text, Font, Size,
 };
 use once_cell::unsync::Lazy;
 use plotters_backend::{
-    text_anchor,
-    //FontTransform,
-    BackendColor,
-    BackendCoord,
-    BackendStyle,
-    BackendTextStyle,
-    DrawingBackend,
-    DrawingErrorKind,
-    FontFamily,
-    FontStyle,
+    text_anchor, BackendColor, BackendCoord, BackendStyle, BackendTextStyle, DrawingBackend,
+    DrawingErrorKind, FontFamily, FontStyle, FontTransform,
 };
 
 use crate::error::Error;
@@ -217,10 +210,9 @@ where
         let font = style_to_font(style);
         let pos = pos.cvt_point();
 
-        //let (w, h) = self.estimate_text_size(text, style)?;
         let text = canvas::Text {
             content: text.to_owned(),
-            position: pos,
+            position: Point::new(0.0, 0.0),
             color: cvt_color(&style.color()),
             size: (style.size() as f32).into(),
             line_height: Default::default(),
@@ -230,25 +222,20 @@ where
             shaping: self.shaping,
         };
         //TODO: fix rotation until text rotation is supported by Iced
-        // let rotate = match style.transform() {
-        //     FontTransform::None => None,
-        //     FontTransform::Rotate90 => Some(90.0),
-        //     FontTransform::Rotate180 => Some(180.0),
-        //     FontTransform::Rotate270 => Some(270.0),
-        //     FontTransform::RotateAngle(angle) => Some(angle),
-        // };
-        // if let Some(rotate) = rotate {
-        //     dbg!(rotate);
-        //     self.frame.with_save(move |frame| {
-        //         frame.fill_text(text);
-        //         frame.translate(Vector::new(pos.x + w as f32 / 2.0, pos.y + h as f32 / 2.0));
-        //         let angle = 2.0 * std::f32::consts::PI * rotate / 360.0;
-        //         frame.rotate(angle);
-        //     });
-        // } else {
-        //     self.frame.fill_text(text);
-        // }
-        self.frame.fill_text(text);
+        let rotate = match style.transform() {
+            FontTransform::None => None,
+            FontTransform::Rotate90 => Some(90.0),
+            FontTransform::Rotate180 => Some(180.0),
+            FontTransform::Rotate270 => Some(270.0),
+        };
+        self.frame.with_save(|frame| {
+            frame.translate(Vector::new(pos.x, pos.y));
+            if let Some(rotate) = rotate {
+                let angle = 2.0 * std::f32::consts::PI * rotate / 360.0;
+                frame.rotate(angle);
+            }
+            frame.fill_text(text);
+        });
 
         Ok(())
     }
